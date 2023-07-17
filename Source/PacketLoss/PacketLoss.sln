@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PacketLoss", "PacketLoss\PacketLoss.csproj", "{CCC0C537-B99C-4193-B2A8-A8E97A783811}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCC0C537-B99C-4193-B2A8-A8E97A783811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCC0C537-B99C-4193-B2A8-A8E97A783811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCC0C537-B99C-4193-B2A8-A8E97A783811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCC0C537-B99C-4193-B2A8-A8E97A783811}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7D0939D-5E92-4647-AC7D-50E3C58A1432}
+	EndGlobalSection
+EndGlobal
