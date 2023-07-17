@@ -1,2 +1,2 @@
 # packet-loss
-A filter for RimWorld letter notifications
+A RimWorld mod for filtering letter notifications
