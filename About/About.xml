@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
     <packageId>Th3Fr3d.PacketLoss</packageId>
-    <name>Packet Loss</name>
+    <name>Packet Loss: The Letter Filter</name>
     <author>Th3_Fr3d</author>
-    <description>Disables certain letter types.</description>
+    <description>
+Packet Loss introduces a dynamic letter filter system, allowing players to customize which in-game letters are dropped or displayed.
+
+With Packet Loss, you can selectively drop letters based on their types, such as ThreatBig letters, ThreatSmall letters, NegativeEvent letters, and more.
+This mod provides granular control over the types of letters you want to receive or ignore, giving you a more tailored gameplay experience.
+
+The mod offers a user-friendly settings window where you can easily enable or disable various letter filters.
+
+In the future, support for custom filters via regular expressions may be added (if I can be bothered).
+    </description>
 
     <modDependencies>
     <li>

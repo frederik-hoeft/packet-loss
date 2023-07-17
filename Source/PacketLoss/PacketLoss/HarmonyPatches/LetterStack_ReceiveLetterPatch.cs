@@ -20,10 +20,8 @@ public static class LetterStack_ReceiveLetterPatch
         if (Settings?.isActive is true)
         {
             _ = _ruleChain ?? throw new InvalidOperationException($"LetterStack_ReceiveLetterPatch attempted to apply rule chain, but chain was null :C");
-            if (Settings.enableVerboseLogging)
-            {
-                Logger.Log($"intercepted LetterStack.ReceiveLetter() using {nameof(LetterStack_ReceiveLetterPatch)} for def {let?.def.ToStringSafe()}.");
-            }
+            Logger.LogVerbose($"intercepted LetterStack.ReceiveLetter() using {nameof(LetterStack_ReceiveLetterPatch)} for letter type '{let?.def?.defName ?? "<Unknown>"}'.");
+            // quick filter, if CanShowInLetterStack is false, then the letter won't be shown anyway
             if (let is { CanShowInLetterStack: true} && _ruleChain.CanHandle(let))
             {
                 MessageAction action = _ruleChain.Audit(let);

@@ -35,7 +35,7 @@ public class RuleChain : IRuleChain
             }
         }
         result = DefaultAction;
-        Logger.Log($"No rule matched letter. Defaulting to: {result}");
+        Logger.LogVerbose($"No rule matched letter. Defaulting to: {result}");
         return result;
     }
 

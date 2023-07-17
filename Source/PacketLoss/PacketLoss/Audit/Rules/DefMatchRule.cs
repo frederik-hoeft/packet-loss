@@ -2,14 +2,19 @@
 
 namespace PacketLoss.Audit.Rules;
 
-internal abstract class DefMatchRule : OptionalRule
+internal class DefMatchRule : OptionalRule
 {
-    protected LetterDef LetterDef { get; }
+    private readonly Func<LetterDef> _letterDefSupplier;
+    private readonly MessageAction _matchAction;
 
-    protected DefMatchRule(LetterDef letterDef, Func<PacketLossSettings, bool> isEnabled, string? debugName = null) : base(isEnabled, debugName)
+    public DefMatchRule(Func<LetterDef> letterDefSupplier, MessageAction matchAction, Func<PacketLossSettings, bool> isEnabled, string? debugName = null) : base(isEnabled, debugName)
     {
-        LetterDef = letterDef;
+        _letterDefSupplier = letterDefSupplier;
+        _matchAction = matchAction;
     }
 
-    public override bool CanHandle(Letter letter) => base.CanHandle(letter) && letter.def is not null;
+    public override bool CanHandle(Letter letter) => base.CanHandle(letter) && !string.IsNullOrEmpty(letter.def?.defName);
+
+    public override MessageAction Audit(Letter letter) =>
+        letter.def.defName.Equals(_letterDefSupplier().defName, StringComparison.InvariantCultureIgnoreCase) ? _matchAction : MessageAction.NextHandler;
 }
