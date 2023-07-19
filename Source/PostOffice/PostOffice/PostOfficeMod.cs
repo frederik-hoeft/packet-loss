@@ -21,21 +21,28 @@ public class PostOfficeMod : Mod
         Log.Message($"Initialized {nameof(PostOfficeMod)}!");
     }
 
-    public override void DoSettingsWindowContents(Rect inRect)
+    public override void DoSettingsWindowContents(Rect canvas)
     {
         if (Settings is null)
         {
             Logger.Error("Settings was null!");
             throw new ArgumentNullException(nameof(Settings));
         }
-        Listing_Standard list = new();
-        list.Begin(inRect);
+        Listing_Standard list = new()
+        {
+            ColumnWidth = (canvas.width - 17) / 2
+        };
+        list.Begin(canvas);
+        Text.Font = GameFont.Medium;
         list.Label("General settings");
+        Text.Font = GameFont.Small;
         list.CheckboxLabeled("Is Active", ref Settings.isActive);
         list.CheckboxLabeled("Enable Logging", ref Settings.enableLogging);
         list.CheckboxLabeled("Enable verbose logging", ref Settings.enableVerboseLogging);
-        list.GapLine();
+        list.NewColumn();
+        Text.Font = GameFont.Medium;
         list.Label("Rules");
+        Text.Font = GameFont.Small;
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.AcceptJoiner)}-letters", ref Settings.dropAcceptJoiner);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.AcceptVisitors)}-letters", ref Settings.dropAcceptVisitors);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.BabyToChild)}-letters", ref Settings.dropBabyToChild);
@@ -46,7 +53,7 @@ public class PostOfficeMod : Mod
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChildBirthday)}-letters", ref Settings.dropChildBirthday);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChildToAdult)}-letters", ref Settings.dropChildToAdult);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.Death)}-letters", ref Settings.dropDeath);
-        //list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChoosePawn)}-letters", ref Settings.dropChoosePawn);
+        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChoosePawn)}-letters", ref Settings.dropChoosePawn);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.NegativeEvent)}-letters", ref Settings.dropNegativeEvent);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.NeutralEvent)}-letters", ref Settings.dropNeutralEvent);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.NewQuest)}-letters", ref Settings.dropNewQuest);
@@ -57,8 +64,8 @@ public class PostOfficeMod : Mod
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ThreatBig)}-letters", ref Settings.dropThreatBig);
         list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ThreatSmall)}-letters", ref Settings.dropThreatSmall);
         list.End();
-        base.DoSettingsWindowContents(inRect);
+        base.DoSettingsWindowContents(canvas);
     }
 
-    public override string SettingsCategory() => "Packet Loss";
+    public override string SettingsCategory() => "Post Office";
 }
