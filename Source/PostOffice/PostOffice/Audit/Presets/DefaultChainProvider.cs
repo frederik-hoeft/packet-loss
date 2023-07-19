@@ -1,8 +1,8 @@
-﻿using PacketLoss.Audit.Chains;
-using PacketLoss.Audit.Rules;
+﻿using PostOffice.Audit.Chains;
+using PostOffice.Audit.Rules;
 using RimWorld;
 
-namespace PacketLoss.Audit.Presets;
+namespace PostOffice.Audit.Presets;
 
 internal static class DefaultChainProvider
 {

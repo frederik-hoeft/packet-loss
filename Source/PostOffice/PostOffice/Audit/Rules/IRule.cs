@@ -1,6 +1,6 @@
 ﻿using Verse;
 
-namespace PacketLoss.Audit.Rules;
+namespace PostOffice.Audit.Rules;
 
 public interface IRule
 {

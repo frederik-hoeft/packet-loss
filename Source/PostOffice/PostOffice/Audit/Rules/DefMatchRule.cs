@@ -1,13 +1,13 @@
 ﻿using Verse;
 
-namespace PacketLoss.Audit.Rules;
+namespace PostOffice.Audit.Rules;
 
 internal class DefMatchRule : OptionalRule
 {
     private readonly Func<LetterDef> _letterDefSupplier;
     private readonly MessageAction _matchAction;
 
-    public DefMatchRule(Func<LetterDef> letterDefSupplier, MessageAction matchAction, Func<PacketLossSettings, bool> isEnabled, string? debugName = null) : base(isEnabled, debugName)
+    public DefMatchRule(Func<LetterDef> letterDefSupplier, MessageAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) : base(isEnabled, debugName)
     {
         _letterDefSupplier = letterDefSupplier;
         _matchAction = matchAction;

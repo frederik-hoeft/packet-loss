@@ -1,4 +1,4 @@
-﻿namespace PacketLoss.Audit;
+﻿namespace PostOffice.Audit;
 
 public enum MessageAction
 {

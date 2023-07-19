@@ -1,8 +1,8 @@
 ﻿using Verse;
 
-namespace PacketLoss;
+namespace PostOffice;
 
-public class PacketLossSettings : ModSettings
+public class PostOfficeSettings : ModSettings
 {
     // general
     internal bool isActive = true;

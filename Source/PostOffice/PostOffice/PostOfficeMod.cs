@@ -1,24 +1,24 @@
 ﻿using HarmonyLib;
-using PacketLoss.Audit.Chains;
-using PacketLoss.Audit.Presets;
-using PacketLoss.HarmonyPatches;
+using PostOffice.Audit.Chains;
+using PostOffice.Audit.Presets;
+using PostOffice.HarmonyPatches;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace PacketLoss;
+namespace PostOffice;
 
-public class PacketLossMod : Mod
+public class PostOfficeMod : Mod
 {
-    public static PacketLossSettings Settings { get; private set; } = null!;
+    public static PostOfficeSettings Settings { get; private set; } = null!;
 
-    public PacketLossMod(ModContentPack content) : base(content)
+    public PostOfficeMod(ModContentPack content) : base(content)
     {
-        Settings = GetSettings<PacketLossSettings>();
+        Settings = GetSettings<PostOfficeSettings>();
         IRuleChain chain = DefaultChainProvider.GetChain();
         LetterStack_ReceiveLetterPatch.UseRuleChain(chain);
-        new Harmony("Th3Fr3d.PacketLoss").PatchAll();
-        Log.Message($"Initialized {nameof(PacketLossMod)}!");
+        new Harmony("Th3Fr3d.PostOffice").PatchAll();
+        Log.Message($"Initialized {nameof(PostOfficeMod)}!");
     }
 
     public override void DoSettingsWindowContents(Rect inRect)

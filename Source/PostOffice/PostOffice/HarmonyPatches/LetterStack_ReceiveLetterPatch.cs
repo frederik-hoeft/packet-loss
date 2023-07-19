@@ -1,11 +1,11 @@
 ﻿using HarmonyLib;
-using PacketLoss.Audit;
-using PacketLoss.Audit.Chains;
+using PostOffice.Audit;
+using PostOffice.Audit.Chains;
 using Verse;
 
-namespace PacketLoss.HarmonyPatches;
+namespace PostOffice.HarmonyPatches;
 
-using static PacketLossMod;
+using static PostOfficeMod;
 
 [HarmonyPatch(typeof(LetterStack), nameof(LetterStack.ReceiveLetter), typeof(Letter), typeof(string))]
 public static class LetterStack_ReceiveLetterPatch

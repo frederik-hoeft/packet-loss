@@ -1,6 +1,6 @@
-﻿using PacketLoss.Audit.Rules;
+﻿using PostOffice.Audit.Rules;
 
-namespace PacketLoss.Audit.Chains;
+namespace PostOffice.Audit.Chains;
 
 public interface IRuleChain : IRule
 {

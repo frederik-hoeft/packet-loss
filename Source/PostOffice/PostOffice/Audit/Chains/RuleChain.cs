@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using PacketLoss.Audit.Rules;
+using PostOffice.Audit.Rules;
 using Verse;
 
-namespace PacketLoss.Audit.Chains;
+namespace PostOffice.Audit.Chains;
 
 public class RuleChain : IRuleChain
 {
