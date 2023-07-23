@@ -41,10 +41,10 @@ public class PostOfficeMod : Mod
         Text.Font = GameFont.Medium;
         list.Label("General settings");
         Text.Font = GameFont.Small;
-        list.CheckboxLabeled("Is Active", ref Settings.isActive);
+        list.CheckboxLabeled("Is active", ref Settings.isActive);
         list.CheckboxLabeled("Enable message support", ref Settings.enableMessageSupport, 
             "Also prevents messages in the top left from being shown if their attributes match the provided filters");
-        list.CheckboxLabeled("Enable Logging", ref Settings.enableLogging);
+        list.CheckboxLabeled("Enable logging", ref Settings.enableLogging);
         list.CheckboxLabeled("Enable verbose logging", ref Settings.enableVerboseLogging);
         list.NewColumn();
         Text.Font = GameFont.Medium;
