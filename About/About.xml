@@ -6,7 +6,7 @@
     <description>
 Post Office allows you to mute certain types of letters and messages. 
 
-Why? Because I am playing with the "CAI 5000 - Advanced AI + Fog Of War" mod and those "Raid: <some faction>" or "Mechanoid cluster" incident letters kinda take some of the fun away of just having your colonists walk around a corner and be greeted by a bunch of angry tribals...
+Why? Because I am playing with the "CAI 5000 - Advanced AI + Fog Of War" mod and those "Raid: [some faction]" or "Mechanoid cluster" incident letters kinda take some of the fun away of just having your colonists walk around a corner and be greeted by a bunch of angry tribals...
 
 Have you always wanted to have mortar shells suddenly rain onto your base because you didn't notice you were being sieged? 
 Or have raiders appear on your door step completely out of the blue? 
@@ -22,6 +22,8 @@ Why not simply use the "Silent Raids" mod? Because that one doesn't work for all
 In the future, support for custom filters via regular expressions may be added (if I can be bothered).
 
 Requires Harmony to work.
+
+Can be added and removed from your saves.
 
 Source code: https://github.com/frederik-hoeft/post-office
     </description>
