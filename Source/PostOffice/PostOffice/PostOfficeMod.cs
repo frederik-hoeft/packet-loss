@@ -15,8 +15,13 @@ public class PostOfficeMod : Mod
     public PostOfficeMod(ModContentPack content) : base(content)
     {
         Settings = GetSettings<PostOfficeSettings>();
-        IRuleChain chain = DefaultChainProvider.GetChain();
-        LetterStack_ReceiveLetterPatch.UseRuleChain(chain);
+
+        IRuleChain<Letter> letterChain = LetterChainProvider.GetChain();
+        LetterStack_ReceiveLetterPatch.UseRuleChain(letterChain);
+
+        IRuleChain<Message> messageChain = MessageChainProvider.GetChain();
+        Messages_MessagePatch.UseRuleChain(messageChain);
+
         new Harmony("Th3Fr3d.PostOffice").PatchAll();
         Log.Message($"Initialized {nameof(PostOfficeMod)}!");
     }
@@ -37,6 +42,8 @@ public class PostOfficeMod : Mod
         list.Label("General settings");
         Text.Font = GameFont.Small;
         list.CheckboxLabeled("Is Active", ref Settings.isActive);
+        list.CheckboxLabeled("Enable message support", ref Settings.enableMessageSupport, 
+            "Also prevents messages in the top left from being shown if their attributes match the provided filters");
         list.CheckboxLabeled("Enable Logging", ref Settings.enableLogging);
         list.CheckboxLabeled("Enable verbose logging", ref Settings.enableVerboseLogging);
         list.NewColumn();

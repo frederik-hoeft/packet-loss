@@ -1,6 +1,6 @@
 ﻿namespace PostOffice.Audit;
 
-public enum MessageAction
+public enum ChainAction
 {
     NextHandler,
     Forward,

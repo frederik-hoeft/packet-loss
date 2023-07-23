@@ -2,13 +2,13 @@
 
 namespace PostOffice.Audit.Rules;
 
-internal abstract class BaseRule : IRule
+internal abstract class BaseRule<TTarget> : IRule<TTarget>
 {
     public string? DebugName { get; }
 
     protected BaseRule(string? debugName) => DebugName = debugName;
 
-    public abstract MessageAction Audit(Letter letter);
+    public abstract ChainAction Audit(TTarget target);
 
-    public abstract bool CanHandle(Letter letter);
+    public abstract bool CanHandle(TTarget target);
 }

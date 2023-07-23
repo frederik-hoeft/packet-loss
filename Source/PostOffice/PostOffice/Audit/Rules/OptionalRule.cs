@@ -2,7 +2,7 @@
 
 namespace PostOffice.Audit.Rules;
 
-internal abstract class OptionalRule : BaseRule
+internal abstract class OptionalRule<TTarget> : BaseRule<TTarget>
 {
     private readonly Func<PostOfficeSettings, bool> _isEnabled;
 
@@ -11,6 +11,6 @@ internal abstract class OptionalRule : BaseRule
         _isEnabled = isEnabled;
     }
 
-    public override bool CanHandle(Letter letter) =>
+    public override bool CanHandle(TTarget target) =>
         _isEnabled.Invoke(PostOfficeMod.Settings);
 }

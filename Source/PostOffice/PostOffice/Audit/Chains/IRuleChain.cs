@@ -2,9 +2,9 @@
 
 namespace PostOffice.Audit.Chains;
 
-public interface IRuleChain : IRule
+public interface IRuleChain<TTarget> : IRule<TTarget>
 {
-    void Add(IRule rule);
+    void Add(IRule<TTarget> rule);
 
-    MessageAction DefaultAction { get; set; }
+    ChainAction DefaultAction { get; set; }
 }

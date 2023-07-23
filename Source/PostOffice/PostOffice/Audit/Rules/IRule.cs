@@ -1,10 +1,8 @@
-﻿using Verse;
+﻿namespace PostOffice.Audit.Rules;
 
-namespace PostOffice.Audit.Rules;
-
-public interface IRule
+public interface IRule<TTarget>
 {
-    bool CanHandle(Letter letter);
+    bool CanHandle(TTarget target);
 
-    MessageAction Audit(Letter letter);
+    ChainAction Audit(TTarget target);
 }

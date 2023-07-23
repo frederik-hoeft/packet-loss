@@ -1,14 +1,13 @@
-﻿using Verse;
+﻿namespace PostOffice.Audit.Rules;
 
-namespace PostOffice.Audit.Rules;
-
-internal class DynamicRule : OptionalRule
+internal class DynamicRule<TTarget> : OptionalRule<TTarget>
 {
-    private readonly Func<Letter, MessageAction> _ruleDefinition;
+    private protected Func<TTarget, ChainAction> RuleDefinition { get; }
 
-    internal DynamicRule(Func<Letter, MessageAction> ruleDefinition, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) : base(isEnabled, debugName) => 
-        _ruleDefinition = ruleDefinition;
+    internal protected DynamicRule(Func<TTarget, ChainAction> ruleDefinition, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
+        : base(isEnabled, debugName) => 
+            RuleDefinition = ruleDefinition;
 
-    public override MessageAction Audit(Letter letter) => 
-        _ruleDefinition.Invoke(letter);
+    public override ChainAction Audit(TTarget target) => 
+        RuleDefinition.Invoke(target);
 }

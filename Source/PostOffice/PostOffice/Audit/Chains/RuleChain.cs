@@ -1,43 +1,45 @@
 ﻿using System.Collections.Generic;
 using PostOffice.Audit.Rules;
-using Verse;
 
 namespace PostOffice.Audit.Chains;
 
-public class RuleChain : IRuleChain
+public abstract class RuleChain<TTarget> : IRuleChain<TTarget>
 {
-    private readonly List<IRule> _rules;
+    private readonly List<IRule<TTarget>> _rules;
 
-    public RuleChain()
+    protected RuleChain()
     {
-        _rules = new List<IRule>();
+        _rules = new List<IRule<TTarget>>();
     }
 
-    public RuleChain(List<IRule> rules) => _rules = rules;
+    public RuleChain(List<IRule<TTarget>> rules) => _rules = rules;
 
-    public MessageAction DefaultAction { get; set; } = MessageAction.Forward;
+    protected abstract string TargetTypeName { get; }
 
-    public void Add(IRule rule) => _rules.Add(rule);
+    public ChainAction DefaultAction { get; set; } = ChainAction.Forward;
 
-    public MessageAction Audit(Letter letter)
+    public void Add(IRule<TTarget> rule) => _rules.Add(rule);
+
+    public ChainAction Audit(TTarget target)
     {
-        MessageAction result;
-        foreach (IRule rule in _rules)
+        ChainAction result;
+        foreach (IRule<TTarget> rule in _rules)
         {
-            if (rule.CanHandle(letter))
+            if (rule.CanHandle(target))
             {
-                result = rule.Audit(letter);
-                if (result != MessageAction.NextHandler)
+                result = rule.Audit(target);
+                if (result != ChainAction.NextHandler)
                 {
-                    Logger.Log($"Rule {rule.GetType().Name}::{(rule as OptionalRule)?.DebugName ?? "<UnknownRule>"} matched letter. The following action will be taken: {result}");
+                    Logger.Log($"Rule {rule.GetType().Name}::{(rule as OptionalRule<TTarget>)?.DebugName ?? "<UnknownRule>"} matched {TargetTypeName}. " +
+                        $"The following action will be taken: {result}");
                     return result;
                 }
             }
         }
         result = DefaultAction;
-        Logger.LogVerbose($"No rule matched letter. Defaulting to: {result}");
+        Logger.LogVerbose($"No rule matched {TargetTypeName}. Defaulting to: {result}");
         return result;
     }
 
-    public bool CanHandle(Letter letter) => true;
+    public abstract bool CanHandle(TTarget target);
 }
