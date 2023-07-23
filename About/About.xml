@@ -4,14 +4,24 @@
     <name>Post Office: The Letter Filter</name>
     <author>Th3_Fr3d</author>
     <description>
-Post Office introduces a dynamic letter filter system, allowing players to customize which in-game letters are dropped or displayed.
+Post Office allows you to mute certain types of letters and messages. 
 
-With Post Office, you can selectively drop letters based on their types, such as ThreatBig letters, ThreatSmall letters, NegativeEvent letters, and more.
-This mod provides granular control over the types of letters you want to receive or ignore, giving you a more tailored gameplay experience.
+Why? Because I am playing with the "CAI 5000 - Advanced AI + Fog Of War" mod and those "Raid: &lt;some guys&gt;" or "Mechanoid cluster" incident letters kinda take some of the fun away of just having your colonists walk around a corner and be greeted by a bunch of angry tribals...
 
-The mod offers a user-friendly settings window where you can easily enable or disable various letter filters.
+Have you always wanted to have mortar shells suddenly rain onto your base because you didn't notice the siege going on? 
+Or have raiders appear on your door step out of nowhere? 
+What about drop pods just suddenly crushing trough your roof?
+
+Welp, your wishes have been answered, I guess.
+With Post Office, you can opt to globally disable "ThreatBig" letters (the big red ones on the right) and all letters of that type (from all mods btw) will be hidden.
+
+Don't care about notifications that a new quest is available? Just disable "NewQuest" letters and you're good to go.
+
+Why not just use Silent Raids? because that one doesn't work for all mods (and because I struggled getting it to work with RimWar :P), soo yeah... now this mod exists ¯\_(ツ)_/¯
 
 In the future, support for custom filters via regular expressions may be added (if I can be bothered).
+
+Requires Harmony to work.
     </description>
 
     <modDependencies>
