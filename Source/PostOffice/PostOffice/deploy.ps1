@@ -55,3 +55,5 @@ Copy-Folder -FromPath "${mod_root}/Source" -ToPath "${upload_dir}/Source" -Exclu
 
 # copy README because why not
 Copy-Item -LiteralPath "${mod_root}/README.md" -Destination $upload_dir
+
+Write-Host "========== Deployment succeeded =========="
