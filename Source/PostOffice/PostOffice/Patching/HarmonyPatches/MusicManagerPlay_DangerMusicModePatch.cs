@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Verse;
 using System.Linq;
 using CombatAI;
+using Verse.Noise;
 
 namespace PostOffice.Patching.HarmonyPatches;
 
@@ -27,10 +28,13 @@ public static class MusicManagerPlay_DangerMusicModePatch
                     // TODO: now actually check if threat is visible in fog of war
                     // TODO: is there an API for that?
                     // maybe something like:
-                    SightTracker tracker = maps[index].GetComp_Fast<SightTracker>();
-                    tracker.TryGetReader(Faction.OfPlayerSilentFail, out SightTracker.SightReader? reader);
-                    Logger.LogVerbose($"there may be {reader.hostiles?.Length} hostiles visible on the map right now. Is that true?");
-                    
+                    Map map = maps[index];
+                    MapComponent_FogGrid? fog = map.GetComp_Fast<MapComponent_FogGrid>();
+                    if (fog is not null)
+                    {
+                        __result = map.mapPawns.AllPawnsSpawned.Any(p => p.HostileTo(Faction.OfPlayerSilentFail) && !fog.IsFogged(p.Position));
+                        Logger.LogVerbose($"allowing combat music? {__result}");
+                    }
                     __result = true;
                     return false;
                 }

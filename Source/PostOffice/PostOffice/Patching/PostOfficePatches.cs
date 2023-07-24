@@ -26,7 +26,7 @@ internal static class PostOfficePatches
                 continue;
             }
             harmony.CreateClassProcessor(harmonyPatch).Patch();
-            Logger.LogAlways($"applied {harmonyPatch.Name}");
+            Logger.LogAlways($"applied {harmonyPatch.Name}{(dependency is not null ? $" because {dependency.ModId} was detected" : string.Empty)}");
             patchCount++;
         }
         Logger.LogAlways($"applied {patchCount} patches!");
