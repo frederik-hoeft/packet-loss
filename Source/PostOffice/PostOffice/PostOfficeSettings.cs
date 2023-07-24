@@ -10,6 +10,9 @@ public class PostOfficeSettings : ModSettings
     internal bool enableLogging = true;
     internal bool enableVerboseLogging = false;
 
+    // mod support
+    internal bool cai5000_delayCombatMusic = true;
+
     // rules
     internal bool dropThreatBig = true;
     internal bool dropThreatSmall = true;
@@ -38,6 +41,8 @@ public class PostOfficeSettings : ModSettings
         Scribe_Values.Look(ref enableMessageSupport, nameof(enableMessageSupport), true);
         Scribe_Values.Look(ref enableLogging, nameof(enableLogging), true);
         Scribe_Values.Look(ref enableVerboseLogging, nameof(enableVerboseLogging), true);
+
+        Scribe_Values.Look(ref cai5000_delayCombatMusic, nameof(cai5000_delayCombatMusic), true);
 
         Scribe_Values.Look(ref dropThreatBig, nameof(dropThreatBig), defaultValue: true);
         Scribe_Values.Look(ref dropThreatSmall, nameof(dropThreatSmall), defaultValue: true);

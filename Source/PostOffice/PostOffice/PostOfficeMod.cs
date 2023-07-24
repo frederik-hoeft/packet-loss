@@ -46,6 +46,12 @@ public class PostOfficeMod : Mod
             "Also prevents messages in the top left from being shown if their attributes match the provided filters");
         list.CheckboxLabeled("Enable logging", ref Settings.enableLogging);
         list.CheckboxLabeled("Enable verbose logging", ref Settings.enableVerboseLogging);
+        list.GapLine();
+        Text.Font = GameFont.Medium;
+        list.Label("Mod support");
+        Text.Font = GameFont.Small;
+        list.CheckboxLabeled("CAI-5000 Fog of War", ref Settings.cai5000_delayCombatMusic,
+            $"If 'CAI 5000 - Advanced AI + Fog Of War' is loaded, {SettingsCategory()} will delay combat music until hostile forces have been detected by your colonists.");
         list.NewColumn();
         Text.Font = GameFont.Medium;
         list.Label("Rules");
