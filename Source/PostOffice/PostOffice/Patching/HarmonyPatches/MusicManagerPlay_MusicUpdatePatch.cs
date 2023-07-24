@@ -11,7 +11,9 @@ public static class MusicManagerPlay_MusicUpdatePatch
 {
     private static int _skippedTicks = 0;
 
-    private const int TICK_DELTA = 100;
+    // only allow every 50th call to MusicUpdate() to pass
+    // (I strongly assume we don't need 100+ music updates per second)
+    private const int TICK_DELTA = 50;
 
     public static bool Prefix()
     {
