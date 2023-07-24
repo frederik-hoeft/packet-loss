@@ -20,4 +20,7 @@ internal static class Logger
 
     public static void Error(string message) => 
         Verse.Log.Error($"[{nameof(PostOffice)}] {message}");
+
+    public static void LogAlways(string message) =>
+        Verse.Log.Message($"[{nameof(PostOffice)}] {message}");
 }

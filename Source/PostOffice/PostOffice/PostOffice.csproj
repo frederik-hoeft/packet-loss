@@ -3,10 +3,16 @@
         <TargetFramework>net472</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>1.4.1.1</Version>
+        <Version>1.4.2.0</Version>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3682" />
       <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="CombatAI">
+            <HintPath>..\..\..\..\2938891185\1.4\Assemblies\CombatAI.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 </Project>

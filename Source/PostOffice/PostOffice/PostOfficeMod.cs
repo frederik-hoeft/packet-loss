@@ -1,7 +1,8 @@
 ﻿using HarmonyLib;
 using PostOffice.Audit.Chains;
 using PostOffice.Audit.Presets;
-using PostOffice.HarmonyPatches;
+using PostOffice.Patching;
+using PostOffice.Patching.HarmonyPatches;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -22,8 +23,7 @@ public class PostOfficeMod : Mod
         IRuleChain<Message> messageChain = MessageChainProvider.GetChain();
         Messages_MessagePatch.UseRuleChain(messageChain);
 
-        new Harmony("Th3Fr3d.PostOffice").PatchAll();
-        Log.Message($"Initialized {nameof(PostOfficeMod)}!");
+        PostOfficePatches.Apply(new Harmony("Th3Fr3d.PostOffice"));
     }
 
     public override void DoSettingsWindowContents(Rect canvas)
