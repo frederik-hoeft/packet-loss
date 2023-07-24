@@ -3,7 +3,7 @@ using PostOffice.Audit;
 using PostOffice.Audit.Chains;
 using Verse;
 
-namespace PostOffice.HarmonyPatches;
+namespace PostOffice.Patching.HarmonyPatches;
 
 using static PostOfficeMod;
 

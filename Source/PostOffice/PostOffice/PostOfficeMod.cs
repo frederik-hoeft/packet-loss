@@ -1,7 +1,8 @@
 ﻿using HarmonyLib;
 using PostOffice.Audit.Chains;
 using PostOffice.Audit.Presets;
-using PostOffice.HarmonyPatches;
+using PostOffice.Patching;
+using PostOffice.Patching.HarmonyPatches;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -22,8 +23,7 @@ public class PostOfficeMod : Mod
         IRuleChain<Message> messageChain = MessageChainProvider.GetChain();
         Messages_MessagePatch.UseRuleChain(messageChain);
 
-        new Harmony("Th3Fr3d.PostOffice").PatchAll();
-        Log.Message($"Initialized {nameof(PostOfficeMod)}!");
+        PostOfficePatches.Apply(new Harmony("Th3Fr3d.PostOffice"));
     }
 
     public override void DoSettingsWindowContents(Rect canvas)
@@ -46,6 +46,12 @@ public class PostOfficeMod : Mod
             "Also prevents messages in the top left from being shown if their attributes match the provided filters");
         list.CheckboxLabeled("Enable logging", ref Settings.enableLogging);
         list.CheckboxLabeled("Enable verbose logging", ref Settings.enableVerboseLogging);
+        list.GapLine();
+        Text.Font = GameFont.Medium;
+        list.Label("Mod support");
+        Text.Font = GameFont.Small;
+        list.CheckboxLabeled("CAI-5000 Fog of War", ref Settings.cai5000_delayCombatMusic,
+            $"If 'CAI 5000 - Advanced AI + Fog Of War' is loaded, {SettingsCategory()} will delay combat music until hostile forces have been detected by your colonists.");
         list.NewColumn();
         Text.Font = GameFont.Medium;
         list.Label("Rules");
