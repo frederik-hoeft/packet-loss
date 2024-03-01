@@ -1,6 +1,7 @@
 ﻿using PostOffice.Audit.Chains;
 using PostOffice.Audit.Rules.Letters;
 using RimWorld;
+using System.Text.RegularExpressions;
 using Verse;
 
 namespace PostOffice.Audit.Presets;
@@ -33,6 +34,11 @@ internal static class LetterChainProvider
         chain.Add(LetterRule.DropIfMatches(() => LetterDefOf.RelicHuntInstallationFound, settings => settings.dropRelicHuntInstallationFound, "RelicHuntInstallationFound"));
         chain.Add(LetterRule.DropIfMatches(() => LetterDefOf.RitualOutcomeNegative, settings => settings.dropRitualOutcomeNegative, "RitualOutcomeNegative"));
         chain.Add(LetterRule.DropIfMatches(() => LetterDefOf.RitualOutcomePositive, settings => settings.dropRitualOutcomePositive, "RitualOutcomePositive"));
+        chain.Add(LetterRule.Dynamic(letter => (letter.Label.RawText, PostOfficeMod.Settings.DropRegexCompiled) switch
+        {
+            (string label, Regex validRegex) when validRegex.IsMatch(label) => ChainAction.Drop,
+            _ => ChainAction.NextHandler
+        }, settings => settings.DropRegex is not null, "DropByRegex"));
         return chain;
     }
 }

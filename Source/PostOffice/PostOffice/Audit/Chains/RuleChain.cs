@@ -7,10 +7,7 @@ public abstract class RuleChain<TTarget> : IRuleChain<TTarget>
 {
     private readonly List<IRule<TTarget>> _rules;
 
-    protected RuleChain()
-    {
-        _rules = new List<IRule<TTarget>>();
-    }
+    protected RuleChain() => _rules = [];
 
     public RuleChain(List<IRule<TTarget>> rules) => _rules = rules;
 

@@ -1,9 +1,7 @@
 ﻿namespace PostOffice.Patching;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-internal class RequiresModAttribute : Attribute
+internal class RequiresModAttribute(string modId) : Attribute
 {
-    public string ModId { get; }
-
-    public RequiresModAttribute(string modId) => ModId = modId;
+    public string ModId { get; } = modId;
 }

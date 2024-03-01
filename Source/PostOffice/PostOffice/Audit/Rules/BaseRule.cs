@@ -1,12 +1,8 @@
-﻿using Verse;
+﻿namespace PostOffice.Audit.Rules;
 
-namespace PostOffice.Audit.Rules;
-
-internal abstract class BaseRule<TTarget> : IRule<TTarget>
+internal abstract class BaseRule<TTarget>(string? debugName) : IRule<TTarget>
 {
-    public string? DebugName { get; }
-
-    protected BaseRule(string? debugName) => DebugName = debugName;
+    public string? DebugName { get; } = debugName;
 
     public abstract ChainAction Audit(TTarget target);
 

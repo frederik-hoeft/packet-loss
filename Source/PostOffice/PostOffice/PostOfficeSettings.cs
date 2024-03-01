@@ -1,4 +1,6 @@
-﻿using Verse;
+﻿using RimWorld.BaseGen;
+using System.Text.RegularExpressions;
+using Verse;
 
 namespace PostOffice;
 
@@ -34,6 +36,44 @@ public class PostOfficeSettings : ModSettings
     internal bool dropRelicHuntInstallationFound = false;
     internal bool dropRitualOutcomeNegative = false;
     internal bool dropRitualOutcomePositive = false;
+    private string dropRegex = string.Empty;
+
+    internal Regex? DropRegexCompiled { get; private set; }
+
+    internal bool DropRegexIsValid { get; private set; }
+
+    internal string DropRegexLatestError { get; private set; } = string.Empty;
+
+    internal string DropRegex
+    {
+        get => dropRegex;
+        set
+        {
+            if (value != dropRegex)
+            {
+                dropRegex = value;
+                RecompileDropRegex();
+            }
+        }
+    }
+
+    private bool RecompileDropRegex()
+    {
+        try
+        {
+            DropRegexCompiled = string.IsNullOrEmpty(dropRegex) ? null : new Regex(dropRegex, RegexOptions.Compiled);
+            DropRegexIsValid = true;
+            DropRegexLatestError = string.Empty;
+            return true;
+        }
+        catch (Exception e)
+        {
+            DropRegexCompiled = null;
+            DropRegexIsValid = false;
+            DropRegexLatestError = e.Message;
+            return false;
+        }
+    }
 
     public override void ExposeData()
     {
@@ -44,9 +84,9 @@ public class PostOfficeSettings : ModSettings
 
         Scribe_Values.Look(ref cai5000_delayCombatMusic, nameof(cai5000_delayCombatMusic), true);
 
-        Scribe_Values.Look(ref dropThreatBig, nameof(dropThreatBig), defaultValue: true);
-        Scribe_Values.Look(ref dropThreatSmall, nameof(dropThreatSmall), defaultValue: true);
-        Scribe_Values.Look(ref dropNegativeEvent, nameof(dropNegativeEvent), defaultValue: true);
+        Scribe_Values.Look(ref dropThreatBig, nameof(dropThreatBig), defaultValue: false);
+        Scribe_Values.Look(ref dropThreatSmall, nameof(dropThreatSmall), defaultValue: false);
+        Scribe_Values.Look(ref dropNegativeEvent, nameof(dropNegativeEvent), defaultValue: false);
         Scribe_Values.Look(ref dropAcceptJoiner, nameof(dropAcceptJoiner), defaultValue: false);
         Scribe_Values.Look(ref dropAcceptVisitors, nameof(dropAcceptVisitors), defaultValue: false);
         Scribe_Values.Look(ref dropBabyToChild, nameof(dropBabyToChild), defaultValue: false);
@@ -64,5 +104,8 @@ public class PostOfficeSettings : ModSettings
         Scribe_Values.Look(ref dropRelicHuntInstallationFound, nameof(dropRelicHuntInstallationFound), defaultValue: false);
         Scribe_Values.Look(ref dropRitualOutcomeNegative, nameof(dropRitualOutcomeNegative), defaultValue: false);
         Scribe_Values.Look(ref dropRitualOutcomePositive, nameof(dropRitualOutcomePositive), defaultValue: false);
+
+        Scribe_Values.Look(ref dropRegex, nameof(dropRegex), string.Empty);
+        RecompileDropRegex();
     }
 }

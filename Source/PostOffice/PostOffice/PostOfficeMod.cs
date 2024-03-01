@@ -4,6 +4,8 @@ using PostOffice.Audit.Presets;
 using PostOffice.Patching;
 using PostOffice.Patching.HarmonyPatches;
 using RimWorld;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -12,6 +14,7 @@ namespace PostOffice;
 public class PostOfficeMod : Mod
 {
     public static PostOfficeSettings Settings { get; private set; } = null!;
+    private static int _foo = 0;
 
     public PostOfficeMod(ModContentPack content) : base(content)
     {
@@ -50,35 +53,61 @@ public class PostOfficeMod : Mod
         Text.Font = GameFont.Medium;
         list.Label("Mod support");
         Text.Font = GameFont.Small;
-        list.CheckboxLabeled("CAI-5000 Fog of War", ref Settings.cai5000_delayCombatMusic,
-            $"If 'CAI 5000 - Advanced AI + Fog Of War' is loaded, {SettingsCategory()} will delay combat music until hostile forces have been detected by your colonists.");
+        if (ModDependency.IsAvailable(ModDependency.CAI5000))
+        {
+            list.CheckboxLabeled("CAI-5000 Fog of War", ref Settings.cai5000_delayCombatMusic,
+                $"If 'CAI 5000 - Advanced AI + Fog Of War' is loaded, {SettingsCategory()} will delay combat music until hostile forces have been detected by your colonists.");
+        }
         list.NewColumn();
         Text.Font = GameFont.Medium;
         list.Label("Rules");
         Text.Font = GameFont.Small;
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.AcceptJoiner)}-letters", ref Settings.dropAcceptJoiner);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.AcceptVisitors)}-letters", ref Settings.dropAcceptVisitors);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.BabyToChild)}-letters", ref Settings.dropBabyToChild);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.BabyBirth)}-letters", ref Settings.dropBabyBirth);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.BetrayVisitors)}-letters", ref Settings.dropBetrayVisitors);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.Bossgroup)}-letters", ref Settings.dropBossgroup);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.BundleLetter)}-letters", ref Settings.dropBundleLetter);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChildBirthday)}-letters", ref Settings.dropChildBirthday);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChildToAdult)}-letters", ref Settings.dropChildToAdult);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.Death)}-letters", ref Settings.dropDeath);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ChoosePawn)}-letters", ref Settings.dropChoosePawn);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.NegativeEvent)}-letters", ref Settings.dropNegativeEvent);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.NeutralEvent)}-letters", ref Settings.dropNeutralEvent);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.NewQuest)}-letters", ref Settings.dropNewQuest);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.PositiveEvent)}-letters", ref Settings.dropPositiveEvent);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.RelicHuntInstallationFound)}-letters", ref Settings.dropRelicHuntInstallationFound);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.RitualOutcomeNegative)}-letters", ref Settings.dropRitualOutcomeNegative);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.RitualOutcomePositive)}-letters", ref Settings.dropRitualOutcomePositive);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ThreatBig)}-letters", ref Settings.dropThreatBig);
-        list.CheckboxLabeled($"Drop {nameof(LetterDefOf.ThreatSmall)}-letters", ref Settings.dropThreatSmall);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.AcceptJoiner))}'", ref Settings.dropAcceptJoiner);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.AcceptVisitors))}'", ref Settings.dropAcceptVisitors);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.BabyToChild))}'", ref Settings.dropBabyToChild);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.BabyBirth))}'", ref Settings.dropBabyBirth);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.BetrayVisitors))}'", ref Settings.dropBetrayVisitors);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.Bossgroup))}'", ref Settings.dropBossgroup);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.BundleLetter))}'", ref Settings.dropBundleLetter);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.ChildBirthday))}'", ref Settings.dropChildBirthday);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.ChildToAdult))}'", ref Settings.dropChildToAdult);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.Death))}'", ref Settings.dropDeath);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.ChoosePawn))}'", ref Settings.dropChoosePawn);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.NegativeEvent))}'", ref Settings.dropNegativeEvent);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.NeutralEvent))}'", ref Settings.dropNeutralEvent);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.NewQuest))}'", ref Settings.dropNewQuest);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.PositiveEvent))}'", ref Settings.dropPositiveEvent);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.RelicHuntInstallationFound))}'", ref Settings.dropRelicHuntInstallationFound);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.RitualOutcomeNegative))}'", ref Settings.dropRitualOutcomeNegative);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.RitualOutcomePositive))}'", ref Settings.dropRitualOutcomePositive);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.ThreatBig))}'", ref Settings.dropThreatBig);
+        list.CheckboxLabeled($"Hide letters of type '{PascalCaseToDisplayString(nameof(LetterDefOf.ThreatSmall))}'", ref Settings.dropThreatSmall);
+        list.GapLine();
+        list.Label("Hide letters by regular expression:");
+        Settings.DropRegex = list.TextEntry(Settings.DropRegex);
+        if (!Settings.DropRegexIsValid)
+        {
+            Text.Font = GameFont.Tiny;
+            list.Label($"Invalid pattern: {Settings.DropRegexLatestError}", tooltip: "The regular expression could not be compiled. Please check the syntax (.NET regular expressions) and try again.");
+        }
         list.End();
+        _foo++;
         base.DoSettingsWindowContents(canvas);
     }
 
     public override string SettingsCategory() => "Post Office";
+
+    private static string PascalCaseToDisplayString(string pascalCase)
+    {
+        StringBuilder bobTheBuilder = new();
+        for (int i = 0; i < pascalCase.Length; i++)
+        {
+            if (i > 0 && char.IsUpper(pascalCase[i]))
+            {
+                bobTheBuilder.Append(' ');
+            }
+            bobTheBuilder.Append(pascalCase[i]);
+        }
+        return bobTheBuilder.ToString();
+    }
 }

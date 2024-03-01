@@ -10,7 +10,7 @@ namespace PostOffice.Patching.HarmonyPatches;
 using static PostOfficeMod;
 
 [HarmonyPatch(typeof(MusicManagerPlay), "DangerMusicMode", MethodType.Getter)]
-[RequiresMod("Krkr.rule56")]
+[RequiresMod(ModDependency.CAI5000)]
 public static class MusicManagerPlay_DangerMusicModePatch
 {
     public static bool Prefix(ref bool __result)

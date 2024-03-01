@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using System.Linq;
 using System.Reflection;
-using Verse;
 
 namespace PostOffice.Patching;
 
@@ -18,9 +17,7 @@ internal static class PostOfficePatches
         int patchCount = 0;
         foreach (Type harmonyPatch in harmonyPatches)
         {
-            if (harmonyPatch.TryGetAttribute(out RequiresModAttribute? dependency) 
-                && !LoadedModManager.RunningMods.Any(mod => 
-                    mod.PackageIdPlayerFacing.Equals(dependency!.ModId, StringComparison.InvariantCultureIgnoreCase)))
+            if (harmonyPatch.TryGetAttribute(out RequiresModAttribute? dependency) && !ModDependency.IsAvailable(dependency!.ModId))
             {
                 Logger.LogAlways($"skipping {harmonyPatch.Name} due to missing dependency: '{dependency!.ModId}'");
                 continue;

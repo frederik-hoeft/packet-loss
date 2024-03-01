@@ -2,12 +2,8 @@
 
 namespace PostOffice.Audit.Rules.Messages;
 
-internal class MessageDefMatchRule : DefMatchRule<Message, MessageTypeDef>
+internal class MessageDefMatchRule(Func<MessageTypeDef> defSupplier, ChainAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
+    : DefMatchRule<Message, MessageTypeDef>(defSupplier, matchAction, isEnabled, debugName)
 {
-    public MessageDefMatchRule(Func<MessageTypeDef> defSupplier, ChainAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
-        : base(defSupplier, matchAction, isEnabled, debugName)
-    {
-    }
-
     protected override MessageTypeDef? GetDefOf(Message target) => target.def;
 }

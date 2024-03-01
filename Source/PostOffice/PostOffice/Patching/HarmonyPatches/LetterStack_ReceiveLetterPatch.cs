@@ -15,7 +15,9 @@ public static class LetterStack_ReceiveLetterPatch
     public static void UseRuleChain(IRuleChain<Letter> ruleChain) =>
         _ruleChain = ruleChain;
 
+#pragma warning disable IDE0060 // Remove unused parameter
     public static bool Prefix(Letter let, string? debugInfo = null)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         if (Settings?.isActive is true)
         {

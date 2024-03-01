@@ -15,7 +15,9 @@ public static class Messages_MessagePatch
     public static void UseRuleChain(IRuleChain<Message> ruleChain) =>
         _ruleChain = ruleChain;
 
+#pragma warning disable IDE0060 // Remove unused parameter
     public static bool Prefix(Message msg, bool historical = true)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         if (Settings?.isActive is true)
         {

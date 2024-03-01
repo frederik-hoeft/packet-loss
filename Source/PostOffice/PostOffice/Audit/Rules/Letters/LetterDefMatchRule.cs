@@ -2,12 +2,8 @@
 
 namespace PostOffice.Audit.Rules.Letters;
 
-internal class LetterDefMatchRule : DefMatchRule<Letter, LetterDef>
+internal class LetterDefMatchRule(Func<LetterDef> defSupplier, ChainAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
+    : DefMatchRule<Letter, LetterDef>(defSupplier, matchAction, isEnabled, debugName)
 {
-    public LetterDefMatchRule(Func<LetterDef> defSupplier, ChainAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
-        : base(defSupplier, matchAction, isEnabled, debugName)
-    {
-    }
-
     protected override LetterDef? GetDefOf(Letter target) => target.def;
 }

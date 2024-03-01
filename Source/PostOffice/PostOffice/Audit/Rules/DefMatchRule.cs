@@ -2,17 +2,11 @@
 
 namespace PostOffice.Audit.Rules;
 
-internal abstract class DefMatchRule<TTarget, TDef> : OptionalRule<TTarget> where TDef : Def
+internal abstract class DefMatchRule<TTarget, TDef>(Func<TDef> defSupplier, ChainAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
+    : OptionalRule<TTarget>(isEnabled, debugName) where TDef : Def
 {
-    private readonly Func<TDef> _defSupplier;
-    private readonly ChainAction _matchAction;
-
-    public DefMatchRule(Func<TDef> defSupplier, ChainAction matchAction, Func<PostOfficeSettings, bool> isEnabled, string? debugName = null) 
-        : base(isEnabled, debugName)
-    {
-        _defSupplier = defSupplier;
-        _matchAction = matchAction;
-    }
+    private readonly Func<TDef> _defSupplier = defSupplier;
+    private readonly ChainAction _matchAction = matchAction;
 
     protected abstract TDef? GetDefOf(TTarget target);
 
