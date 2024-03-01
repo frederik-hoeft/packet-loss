@@ -4,7 +4,7 @@
     <name>Post Office: The Letter Filter</name>
     <author>Th3_Fr3d</author>
     <description>
-Post Office allows you to mute certain types of letters and messages. 
+Post Office allows you to mute certain types of letters and messages (yes, you can finally disable the "Legendary Work" messages, although you'll have to learn how to write regular expressions first, but hey, it's not that hard, I promise! ^^)
 
 Why? Because I am playing with the "CAI 5000 - Advanced AI + Fog Of War" mod and those "Raid: [some faction]" or "Mechanoid cluster" incident letters kinda take some of the fun away of just having your colonists walk around a corner and be greeted by a bunch of angry tribals...
 
@@ -18,8 +18,6 @@ With Post Office, you can opt to globally disable certain letter types. For exam
 Don't care about notifications that a new quest is available? Just disable "NewQuest" letters and you're good to go.
 
 Why not simply use the "Silent Raids" mod? Because that one doesn't work for all mods (and because I struggled getting it to work with RimWar :P), soo yeah... now this mod exists ¯\_(ツ)_/¯
-
-In the future, support for custom filters via regular expressions may be added (if I can be bothered).
 
 Requires Harmony to work.
 
