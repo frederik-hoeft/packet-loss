@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PostOffice.Audit.Rules;
+using PostOffice.Dependencies;
 
 namespace PostOffice.Audit.Chains;
 
@@ -16,6 +17,14 @@ public abstract class RuleChain<TTarget> : IRuleChain<TTarget>
     public ChainAction DefaultAction { get; set; } = ChainAction.Forward;
 
     public void Add(IRule<TTarget> rule) => _rules.Add(rule);
+
+    public void Add<TModDependency>(IRule<TTarget> rule) where TModDependency : struct, IRequiresMod
+    {
+        if (ModDependency.IsSatisfied<TModDependency>())
+        {
+            Add(rule);
+        }
+    }
 
     public ChainAction Audit(TTarget target)
     {

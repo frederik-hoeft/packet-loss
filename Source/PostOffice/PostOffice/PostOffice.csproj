@@ -4,15 +4,16 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <Version>1.5.0.0</Version>
+        <Platforms>AnyCPU;x64</Platforms>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4085" />
       <PackageReference Include="Lib.Harmony" Version="2.3.3" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="CombatAI">
-            <HintPath>..\..\..\..\2938891185\1.4\Assemblies\CombatAI.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
+      <Reference Include="CombatAI">
+        <HintPath>_build\dependencies\CombatAI.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>
