@@ -1,11 +1,21 @@
-﻿dotnet clean
+﻿# Ensure abort after errors are encountered (may happen because of BOMs)
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+dotnet clean
 dotnet restore --no-cache
 dotnet build -c Release
 dotnet publish -c Release -p:PublishProfile=release
 
 $project_name = "PostOffice"
-$upload_dir = "../../../../../../../common/RimWorld/Mods/${project_name}" 
-$mod_root = "../../.."
+$game_version = "1.5"
+$mod_root = (Get-Item -LiteralPath "${PSScriptRoot}/../../../..").FullName
+
+# Read the JSON file
+$config = Get-Content -LiteralPath "${PSScriptRoot}/hostconfig.json" | ConvertFrom-Json
+
+# Use the path from the JSON file
+$upload_dir = "${config.steam_root}/steamapps/common/RimWorld/Mods/${project_name}"
 
 # clean upload dir
 if (Test-Path -LiteralPath $upload_dir) {
@@ -14,12 +24,14 @@ if (Test-Path -LiteralPath $upload_dir) {
 
 # create new folder structure
 New-Item -ItemType Directory $upload_dir
-New-Item -ItemType Directory "${upload_dir}/Assemblies"
+# include source files
 New-Item -ItemType Directory "${upload_dir}/Source"
-
-# copy assemblies (deps should be handled via mod dependencies)
-Copy-Item -LiteralPath "${mod_root}/Assemblies/${project_name}.dll" -Destination "${upload_dir}/Assemblies"
-
+# copy everything in the oldversions directory to the new upload directory root
+Copy-Item -LiteralPath "${mod_root}/oldversions" -Recurse -Destination $upload_dir –Container
+# create folder for current version
+New-Item -ItemType Directory "${upload_dir}/${game_version}/Assemblies"
+# copy assemblies (deps should be handled via mod dependencies from the workshop)
+Copy-Item -LiteralPath "${mod_root}/artifacts/${project_name}.dll" -Destination "${upload_dir}/${game_version}/Assemblies"
 # copy About
 Copy-Item -LiteralPath "${mod_root}/About" -Recurse -Destination $upload_dir –Container
 
