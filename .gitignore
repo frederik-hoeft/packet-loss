@@ -364,4 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 artifacts/
-dependencies/
+**/_build/dependencies/*
