@@ -2,7 +2,6 @@
 using RimWorld;
 using System.Collections.Generic;
 using Verse;
-using System.Linq;
 using CombatAI;
 
 namespace PostOffice.Patching.HarmonyPatches;
@@ -31,11 +30,25 @@ public static class MusicManagerPlay_DangerMusicModePatch
                     // do some additional checks and only play combat music iff
                     // enemies are *actually visible*
                     Map map = maps[index];
+                    // DO NOT capture this variable in any lambda or closure! There are reports of other mods using reflection to enumerate all fields of all types in the assembly,
+                    // and this will cause a crash if it attempts to enumerate the captured MapComponent_FogGrid instance if CAI-5000 is not loaded.
+                    // (even though, personally, I would blame the other authors for doing that, not me. Touch something you shouldn't, and you get burned.)
+                    // but yeah, anyways, for the sake of compatibility, don't capture this variable.
                     MapComponent_FogGrid? fog = map.GetComp_Fast<MapComponent_FogGrid>();
                     if (fog is not null)
                     {
-                        // TODO: this could probably benefit from caching :P
-                        __result = map.mapPawns.AllPawnsSpawned.Any(p => p.HostileTo(Faction.OfPlayerSilentFail) && !fog.IsFogged(p.Position));
+                        // check if there are any visible threats (DO NOT use LINQ here, see above)
+                        bool foundVisibleThreat = false;
+                        for (int i = 0; i < map.mapPawns.AllPawnsSpawned.Count; i++)
+                        {
+                            Pawn pawn = map.mapPawns.AllPawnsSpawned[i];
+                            if (pawn.HostileTo(Faction.OfPlayerSilentFail) && !fog.IsFogged(pawn.Position))
+                            {
+                                foundVisibleThreat = true;
+                                break;
+                            }
+                        }
+                        __result = foundVisibleThreat;
                         resultSet = true;
                         if (__result)
                         {
